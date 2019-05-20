@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServerService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IServerService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8301/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8301/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8301/?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServerService_GetFilters_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFilters" />
+  </wsdl:message>
+  <wsdl:message name="IServerService_GetFilters_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFiltersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerService_StartFilter_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartFilter" />
+  </wsdl:message>
+  <wsdl:message name="IServerService_StopFilter_InputMessage">
+    <wsdl:part name="parameters" element="tns:StopFilter" />
+  </wsdl:message>
+  <wsdl:message name="IServerService_GetProgress_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetProgress" />
+  </wsdl:message>
+  <wsdl:message name="IServerService_GetImage_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetImage" />
+  </wsdl:message>
+  <wsdl:message name="IServerService_StopWorking_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:StopWorking" />
+  </wsdl:message>
+  <wsdl:portType name="IServerService">
+    <wsdl:operation name="GetFilters">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServerService/GetFilters" message="tns:IServerService_GetFilters_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServerService/GetFiltersResponse" message="tns:IServerService_GetFilters_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartFilter">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServerService/StartFilter" message="tns:IServerService_StartFilter_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopFilter">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServerService/StopFilter" message="tns:IServerService_StopFilter_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProgress">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServerService/GetProgress" message="tns:IServerService_GetProgress_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetImage">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServerService/GetImage" message="tns:IServerService_GetImage_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopWorking">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServerService/StopWorking" message="tns:IServerService_StopWorking_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IServerService" type="tns:IServerService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServerService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetFilters">
+      <soap12:operation soapAction="http://tempuri.org/IServerService/GetFilters" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartFilter">
+      <soap12:operation soapAction="http://tempuri.org/IServerService/StartFilter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="StopFilter">
+      <soap12:operation soapAction="http://tempuri.org/IServerService/StopFilter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetProgress">
+      <soap12:operation soapAction="http://tempuri.org/IServerService/GetProgress" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImage">
+      <soap12:operation soapAction="http://tempuri.org/IServerService/GetImage" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopWorking">
+      <soap12:operation soapAction="http://tempuri.org/IServerService/StopWorking" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServerService">
+    <wsdl:port name="NetTcpBinding_IServerService" binding="tns:NetTcpBinding_IServerService">
+      <soap12:address location="net.tcp://localhost:8302/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:8302/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>RIMALON\Rimalon</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
